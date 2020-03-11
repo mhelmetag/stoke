@@ -15,11 +15,9 @@ The static site is hosted on Netlify and deployed via their CD pipeline.
 Like any `create-react-app`-based app, use:
 
 ```sh
-$ yarn start
+yarn start
 ```
 
-# Credits
+## Credits
 
 Icon made by [Freepik](https://www.flaticon.com/authors/freepik) from [www.flaticon.com](https://www.flaticon.com/).
-
-Quotes by [Uncle Tito](https://rocketpower.fandom.com/wiki/Tito_Makani).
