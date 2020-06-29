@@ -10,9 +10,9 @@ function App() {
 
   useEffect(() => {
     async function fetchSpots() {
-      let data = await fetch(`${REACT_APP_STOKE_ARCHIVES_URL}/spots`)
-        .then(response => response.json())
-        .then(data => data);
+      const data = await fetch(`${REACT_APP_STOKE_ARCHIVES_URL}/spots`)
+        .then((response) => response.json())
+        .then((data) => data);
 
       if (data && data.spots) {
         setSpots(data.spots);
@@ -21,14 +21,9 @@ function App() {
     }
 
     async function fetchPredictions() {
-      let todayDate = new Date();
-      let todayDateString = todayDate.toISOString().slice(0, 10);
-
-      let data = await fetch(
-        `${REACT_APP_STOKE_ARCHIVES_URL}/predictions?created_on=${todayDateString}`
-      )
-        .then(response => response.json())
-        .then(data => data);
+      let data = await fetch(`${REACT_APP_STOKE_ARCHIVES_URL}/predictions`)
+        .then((response) => response.json())
+        .then((data) => data);
 
       if (data && data.predictions) {
         setPredictions(data.predictions);
@@ -47,25 +42,28 @@ function App() {
 
   function predictionsComponent() {
     if (spotsLoading || predictionsloading) {
-      return <section className="section"></section>;
+      return (
+        <section className="section" style={{ minHeight: "80vh" }}></section>
+      );
     } else {
       let groupedPredictions = {};
-      predictions.forEach(prediction => {
+      predictions.forEach((prediction) => {
         groupedPredictions[prediction.spot_id] = [
           ...(groupedPredictions[prediction.spot_id] || []),
-          prediction
+          prediction,
         ];
       });
 
       return (
-        <section className="section">
+        <section className="section" style={{ minHeight: "80vh" }}>
           <div className="container">
             <div className="columns is-multiline">
               {Object.entries(groupedPredictions).map(
                 ([spotId, predictions]) => {
-                  let spot = spots.find(s => {
+                  const spot = spots.find((s) => {
                     return String(s.id) === spotId;
                   });
+                  const fiveDayPredictions = predictions.slice(0, 6);
 
                   return (
                     <div className="column is-full" key={spot.id}>
@@ -78,11 +76,11 @@ function App() {
                                 <p className="title">{spot.name}</p>
                               </div>
                             </div>
-                            {predictions.map(prediction => {
-                              let predictionDate = new Date(
+                            {fiveDayPredictions.map((prediction) => {
+                              const predictionDate = new Date(
                                 prediction.forecasted_for
                               );
-                              let predictionDateString = predictionDate.toLocaleDateString(
+                              const predictionDateString = predictionDate.toLocaleDateString(
                                 "en-US"
                               );
 
