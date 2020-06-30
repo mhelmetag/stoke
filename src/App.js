@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 
+import Predictions from "./components/Predictions";
+
 const { REACT_APP_STOKE_ARCHIVES_URL } = process.env;
 
 function App() {
   const [spotsLoading, setSpotsLoading] = useState(true);
   const [spots, setSpots] = useState([]);
-  const [predictionsloading, setPredictionsLoading] = useState(true);
+  const [predictionsLoading, setPredictionsLoading] = useState(true);
   const [predictions, setPredictions] = useState([]);
 
   useEffect(() => {
@@ -35,90 +37,16 @@ function App() {
       fetchSpots();
     }
 
-    if (predictionsloading) {
+    if (predictionsLoading) {
       fetchPredictions();
     }
-  }, [spotsLoading, predictionsloading]);
-
-  function predictionsComponent() {
-    if (spotsLoading || predictionsloading) {
-      return (
-        <section className="section" style={{ minHeight: "80vh" }}></section>
-      );
-    } else {
-      let groupedPredictions = {};
-      predictions.forEach((prediction) => {
-        groupedPredictions[prediction.spot_id] = [
-          ...(groupedPredictions[prediction.spot_id] || []),
-          prediction,
-        ];
-      });
-
-      return (
-        <section className="section" style={{ minHeight: "80vh" }}>
-          <div className="container">
-            <div className="columns is-multiline">
-              {Object.entries(groupedPredictions).map(
-                ([spotId, predictions]) => {
-                  const spot = spots.find((s) => {
-                    return String(s.id) === spotId;
-                  });
-                  const fiveDayPredictions = predictions.slice(0, 6);
-
-                  return (
-                    <div className="column is-full" key={spot.id}>
-                      <div className="card">
-                        <div className="card-content">
-                          <div className="level">
-                            <div className="level-item has-text-centered">
-                              <div>
-                                <p className="heading">Spot Name</p>
-                                <p className="title">{spot.name}</p>
-                              </div>
-                            </div>
-                            {fiveDayPredictions.map((prediction) => {
-                              const predictionDate = new Date(
-                                prediction.forecasted_for
-                              );
-                              const predictionDateString = predictionDate.toLocaleDateString(
-                                "en-US"
-                              );
-
-                              return (
-                                <div
-                                  className="level-item has-text-centered"
-                                  key={prediction.id}
-                                >
-                                  <div>
-                                    <p className="heading">
-                                      {predictionDateString} UTC
-                                    </p>
-                                    <p className="title">
-                                      {prediction.stoke_height} Ft
-                                    </p>
-                                  </div>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                }
-              )}
-            </div>
-          </div>
-        </section>
-      );
-    }
-  }
+  }, [spotsLoading, spots, predictionsLoading, predictions]);
 
   return (
     <>
       <section
         className="section"
-        style={{ background: "linear-gradient(to bottom right, green, blue" }}
+        style={{ background: "linear-gradient(to bottom right, orange, red" }}
       >
         <div className="container">
           <div className="level">
@@ -139,7 +67,12 @@ function App() {
           </div>
         </div>
       </section>
-      {predictionsComponent()}
+      <Predictions
+        spotsLoading={spotsLoading}
+        spots={spots}
+        predictionsLoading={predictionsLoading}
+        predictions={predictions}
+      />
       <footer className="footer">
         <div className="content has-text-centered">
           <p>Built by Maxworld Technologies</p>
