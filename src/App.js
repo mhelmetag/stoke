@@ -40,7 +40,7 @@ function App() {
     if (predictionsLoading) {
       fetchPredictions();
     }
-  }, [spotsLoading, spots, predictionsLoading, predictions]);
+  }, [spotsLoading, predictionsLoading]);
 
   return (
     <>
