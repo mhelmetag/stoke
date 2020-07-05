@@ -66,6 +66,11 @@ const Predictions = ({
                             const predictionDate = new Date(
                               prediction.forecasted_for
                             );
+                            const timezoneOffset =
+                              new Date().getTimezoneOffset() / 60;
+                            predictionDate.setHours(
+                              predictionDate.getHours() - timezoneOffset
+                            );
                             const predictionDateString = predictionDate.toLocaleDateString(
                               "en-US"
                             );
@@ -77,7 +82,7 @@ const Predictions = ({
                               >
                                 <div>
                                   <p className="is-size-5">
-                                    {predictionDateString} UTC
+                                    {predictionDateString}
                                   </p>
                                   <p>
                                     <span className="is-size-7">Ours </span>
