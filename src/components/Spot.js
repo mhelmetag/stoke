@@ -20,7 +20,7 @@ const Spot = ({ spots, spotId, predictions }) => {
   const timezoneOffset = new Date().getTimezoneOffset() / 60;
 
   return (
-    <div className="column is-full" key={spot.id}>
+    <div className="column is-full">
       <div className="card">
         <header className="card-header">
           <p className="card-header-title is-uppercase">{spot.name}</p>
@@ -38,6 +38,7 @@ const Spot = ({ spots, spotId, predictions }) => {
             {fourDayPredictions.sort(sortPredictions).map((prediction) => {
               return (
                 <Prediction
+                  key={prediction.id}
                   timezoneOffset={timezoneOffset}
                   prediction={prediction}
                 />
