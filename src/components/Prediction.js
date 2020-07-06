@@ -6,7 +6,7 @@ const Prediction = ({ timezoneOffset, prediction }) => {
   const predictionDateString = predictionDate.toLocaleDateString("en-US");
 
   return (
-    <div className="level-item has-text-centered" key={prediction.id}>
+    <div className="level-item has-text-centered">
       <div>
         <p className="is-size-5">{predictionDateString}</p>
         <p>

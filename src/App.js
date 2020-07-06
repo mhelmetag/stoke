@@ -22,7 +22,19 @@ function App() {
         setPredictionsLoading(false);
       });
     }
-  }, [fetchSpots, spotsLoading, fetchPredictions, predictionsLoading]);
+  }, [spotsLoading, fetchSpots, predictionsLoading, fetchPredictions]);
+
+  const predictionsComponent = () => {
+    if (spotsLoading || predictionsLoading) {
+      return (
+        <section className="section" style={{ minHeight: "80vh" }}>
+          <div className="container">Loading...</div>
+        </section>
+      );
+    } else {
+      return <Predictions spots={spots} predictions={predictions} />;
+    }
+  };
 
   return (
     <>
@@ -49,12 +61,7 @@ function App() {
           </div>
         </div>
       </section>
-      <Predictions
-        spotsLoading={spotsLoading}
-        spots={spots}
-        predictionsLoading={predictionsLoading}
-        predictions={predictions}
-      />
+      {predictionsComponent()}
       <footer className="footer">
         <div className="content has-text-centered">
           <p>Built by Maxworld Technologies</p>
