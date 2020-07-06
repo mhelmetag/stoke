@@ -12,10 +12,10 @@ The static site is hosted on Netlify and deployed via their CD pipeline.
 
 ## How to Run Locally
 
-Like any `create-react-app`-based app, use:
+Like any npm-based `create-react-app` app, use:
 
 ```sh
-yarn start
+npm start
 ```
 
 ## Credits
