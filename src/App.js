@@ -1,46 +1,28 @@
 import React, { useState, useEffect } from "react";
 
 import Predictions from "./components/Predictions";
-
-const { REACT_APP_STOKE_ARCHIVES_URL } = process.env;
+import { useSpots } from "./hooks/useSpots";
+import { usePredictions } from "./hooks/usePredictions";
 
 function App() {
+  const { fetchSpots, spots } = useSpots();
+  const { fetchPredictions, predictions } = usePredictions();
   const [spotsLoading, setSpotsLoading] = useState(true);
-  const [spots, setSpots] = useState([]);
   const [predictionsLoading, setPredictionsLoading] = useState(true);
-  const [predictions, setPredictions] = useState([]);
 
   useEffect(() => {
-    async function fetchSpots() {
-      const data = await fetch(`${REACT_APP_STOKE_ARCHIVES_URL}/spots`)
-        .then((response) => response.json())
-        .then((data) => data);
-
-      if (data && data.spots) {
-        setSpots(data.spots);
-        setSpotsLoading(false);
-      }
-    }
-
-    async function fetchPredictions() {
-      let data = await fetch(`${REACT_APP_STOKE_ARCHIVES_URL}/predictions`)
-        .then((response) => response.json())
-        .then((data) => data);
-
-      if (data && data.predictions) {
-        setPredictions(data.predictions);
-        setPredictionsLoading(false);
-      }
-    }
-
     if (spotsLoading) {
-      fetchSpots();
+      fetchSpots(() => {
+        setSpotsLoading(false);
+      });
     }
 
     if (predictionsLoading) {
-      fetchPredictions();
+      fetchPredictions(() => {
+        setPredictionsLoading(false);
+      });
     }
-  }, [spotsLoading, predictionsLoading]);
+  }, [fetchSpots, spotsLoading, fetchPredictions, predictionsLoading]);
 
   return (
     <>
