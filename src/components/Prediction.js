@@ -8,16 +8,24 @@ const Prediction = ({ timezoneOffset, prediction }) => {
   return (
     <div className="level-item has-text-centered">
       <div>
-        <p className="is-size-5">{predictionDateString}</p>
+        <p id={`date-${prediction.id}`} className="is-size-5">
+          {predictionDateString}
+        </p>
         <p>
           <span className="is-size-7">Ours </span>
-          <span className="is-size-4 has-text-weight-bold">
+          <span
+            id={`ours-${prediction.id}`}
+            className="is-size-4 has-text-weight-bold"
+          >
             {prediction.stoke_height} Ft
           </span>
         </p>
         <p>
           <span className="is-size-7">Theirs </span>
-          <span className="is-size-4 has-text-weight-bold">
+          <span
+            id={`theirs-${prediction.id}`}
+            className="is-size-4 has-text-weight-bold"
+          >
             {prediction.surfline_height} Ft
           </span>
         </p>
