@@ -1,7 +1,7 @@
 import React from "react";
 import Prediction from "./Prediction";
 
-const Spot = ({ spots, spotId, predictions }) => {
+const Spot = ({ spot, predictions }) => {
   const sortPredictions = (a, b) => {
     if (a.forecasted_for < b.forecasted_for) {
       return -1;
@@ -13,9 +13,6 @@ const Spot = ({ spots, spotId, predictions }) => {
     return 0;
   };
 
-  const spot = spots.find((s) => {
-    return String(s.id) === spotId;
-  });
   const fourDayPredictions = predictions.slice(0, 4);
   const timezoneOffset = new Date().getTimezoneOffset() / 60;
 

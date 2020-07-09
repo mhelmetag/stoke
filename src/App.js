@@ -1,41 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
-import Predictions from "./components/Predictions";
-import { useSpots } from "./hooks/useSpots";
-import { usePredictions } from "./hooks/usePredictions";
+import SpotList from "./components/SpotList";
 
 function App() {
-  const { fetchSpots, spots } = useSpots();
-  const { fetchPredictions, predictions } = usePredictions();
-  const [spotsLoading, setSpotsLoading] = useState(true);
-  const [predictionsLoading, setPredictionsLoading] = useState(true);
-
-  useEffect(() => {
-    if (spotsLoading) {
-      fetchSpots(() => {
-        setSpotsLoading(false);
-      });
-    }
-
-    if (predictionsLoading) {
-      fetchPredictions(() => {
-        setPredictionsLoading(false);
-      });
-    }
-  }, [spotsLoading, fetchSpots, predictionsLoading, fetchPredictions]);
-
-  const predictionsComponent = () => {
-    if (spotsLoading || predictionsLoading) {
-      return (
-        <section className="section" style={{ minHeight: "80vh" }}>
-          <div className="container">Loading...</div>
-        </section>
-      );
-    } else {
-      return <Predictions spots={spots} predictions={predictions} />;
-    }
-  };
-
   return (
     <>
       <section
@@ -61,7 +28,9 @@ function App() {
           </div>
         </div>
       </section>
-      {predictionsComponent()}
+      <section className="section" style={{ minHeight: "80vh" }}>
+        <SpotList />
+      </section>
       <footer className="footer">
         <div className="content has-text-centered">
           <p>Built by Maxworld Technologies</p>
