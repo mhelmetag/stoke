@@ -14,33 +14,23 @@ const PREDICTION = {
 };
 
 describe("<Prediction />", () => {
-  it("renders without crashing", () => {
-    shallow(
+  let wrapper;
+
+  beforeEach(() => {
+    wrapper = shallow(
       <Prediction timezoneOffset={TIMEZONE_OFFSET} prediction={PREDICTION} />
     );
   });
 
   it("renders date with offset correctly", () => {
-    const wrapper = shallow(
-      <Prediction timezoneOffset={TIMEZONE_OFFSET} prediction={PREDICTION} />
-    );
-
     expect(wrapper.find("p#date-1").text()).toEqual("7/9/2020");
   });
 
   it("renders stoke height correctly", () => {
-    const wrapper = shallow(
-      <Prediction timezoneOffset={TIMEZONE_OFFSET} prediction={PREDICTION} />
-    );
-
     expect(wrapper.find("span#ours-1").text()).toEqual("2 Ft");
   });
 
   it("renders surfline height correctly", () => {
-    const wrapper = shallow(
-      <Prediction timezoneOffset={TIMEZONE_OFFSET} prediction={PREDICTION} />
-    );
-
     expect(wrapper.find("span#theirs-1").text()).toEqual("3.5 Ft");
   });
 });

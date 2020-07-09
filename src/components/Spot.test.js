@@ -32,18 +32,17 @@ const PREDICTIONS = [
 ];
 
 describe("<Spot />", () => {
-  it("renders without crashing", () => {
-    shallow(<Spot spot={SPOT} predictions={PREDICTIONS} />);
+  let wrapper;
+
+  beforeEach(() => {
+    wrapper = shallow(<Spot spot={SPOT} predictions={PREDICTIONS} />);
   });
 
   it("renders correct number of predictions", () => {
-    const wrapper = shallow(<Spot spot={SPOT} predictions={PREDICTIONS} />);
-
     expect(wrapper.find(Prediction)).toHaveLength(2);
   });
 
   it("renders correct order of predictions", () => {
-    const wrapper = shallow(<Spot spot={SPOT} predictions={PREDICTIONS} />);
     const predictionIds = wrapper
       .find(Prediction)
       .map((prediction) => prediction.props().prediction.id);
