@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-import Predictions from "./components/Predictions";
 import { useSpots } from "./hooks/useSpots";
 import { usePredictions } from "./hooks/usePredictions";
+
+import SpotList from "./components/SpotList";
 
 function App() {
   const { fetchSpots, spots } = useSpots();
@@ -32,7 +33,7 @@ function App() {
         </section>
       );
     } else {
-      return <Predictions spots={spots} predictions={predictions} />;
+      return <SpotList spots={spots} predictions={predictions} />;
     }
   };
 

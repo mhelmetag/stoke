@@ -2,7 +2,7 @@ import React from "react";
 
 import Spot from "./Spot";
 
-const Predictions = ({ spots, predictions }) => {
+const SpotList = ({ spots, predictions }) => {
   let groupedPredictions = {};
   predictions.forEach((prediction) => {
     groupedPredictions[prediction.spot_id] = [
@@ -16,14 +16,11 @@ const Predictions = ({ spots, predictions }) => {
       <div className="container">
         <div className="columns is-multiline">
           {Object.entries(groupedPredictions).map(([spotId, predictions]) => {
-            return (
-              <Spot
-                key={spotId}
-                spots={spots}
-                spotId={spotId}
-                predictions={predictions}
-              />
-            );
+            const spot = spots.find((s) => {
+              return String(s.id) === spotId;
+            });
+
+            return <Spot key={spotId} spot={spot} predictions={predictions} />;
           })}
         </div>
       </div>
@@ -31,4 +28,4 @@ const Predictions = ({ spots, predictions }) => {
   );
 };
 
-export default Predictions;
+export default SpotList;
