@@ -1,8 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+
+import { useSpots } from "../hooks/useSpots";
+import { usePredictions } from "../hooks/usePredictions";
 
 import Spot from "./Spot";
 
-const SpotList = ({ spots, predictions }) => {
+const SpotList = () => {
+  const { fetchSpots, spots } = useSpots();
+  const { fetchPredictions, predictions } = usePredictions();
+  const [spotsLoading, setSpotsLoading] = useState(true);
+  const [predictionsLoading, setPredictionsLoading] = useState(true);
+
+  useEffect(() => {
+    if (spotsLoading) {
+      fetchSpots(() => {
+        setSpotsLoading(false);
+      });
+    }
+
+    if (predictionsLoading) {
+      fetchPredictions(() => {
+        setPredictionsLoading(false);
+      });
+    }
+  }, [spotsLoading, fetchSpots, predictionsLoading, fetchPredictions]);
+
   let groupedPredictions = {};
   predictions.forEach((prediction) => {
     groupedPredictions[prediction.spot_id] = [
@@ -11,8 +33,10 @@ const SpotList = ({ spots, predictions }) => {
     ];
   });
 
-  return (
-    <section className="section" style={{ minHeight: "80vh" }}>
+  if (spotsLoading || predictionsLoading) {
+    return <div className="container">Loading...</div>;
+  } else {
+    return (
       <div className="container">
         <div className="columns is-multiline">
           {Object.entries(groupedPredictions).map(([spotId, predictions]) => {
@@ -24,8 +48,8 @@ const SpotList = ({ spots, predictions }) => {
           })}
         </div>
       </div>
-    </section>
-  );
+    );
+  }
 };
 
 export default SpotList;
