@@ -1,41 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
-import { useSpots } from "../hooks/useSpots";
-import { usePredictions } from "../hooks/usePredictions";
+import { useQuery } from "react-query";
+
+import { getPredictions } from "../api/getPredictions";
+import { getSpots } from "../api/getSpots";
 
 import Spot from "./Spot";
 
 const SpotList = () => {
-  const { fetchSpots, spots } = useSpots();
-  const { fetchPredictions, predictions } = usePredictions();
-  const [spotsLoading, setSpotsLoading] = useState(true);
-  const [predictionsLoading, setPredictionsLoading] = useState(true);
-
-  useEffect(() => {
-    if (spotsLoading) {
-      fetchSpots(() => {
-        setSpotsLoading(false);
-      });
-    }
-
-    if (predictionsLoading) {
-      fetchPredictions(() => {
-        setPredictionsLoading(false);
-      });
-    }
-  }, [spotsLoading, fetchSpots, predictionsLoading, fetchPredictions]);
-
-  let groupedPredictions = {};
-  predictions.forEach((prediction) => {
-    groupedPredictions[prediction.spot_id] = [
-      ...(groupedPredictions[prediction.spot_id] || []),
-      prediction,
-    ];
-  });
+  const { isLoading: spotsLoading, data: spotsData } = useQuery(
+    "spots",
+    getSpots
+  );
+  const { isLoading: predictionsLoading, data: predictionsData } = useQuery(
+    "predictions",
+    getPredictions
+  );
 
   if (spotsLoading || predictionsLoading) {
     return <div className="container">Loading...</div>;
   } else {
+    let spots = spotsData.spots;
+    let predictions = predictionsData.predictions;
+
+    let groupedPredictions = {};
+    predictions.forEach((prediction) => {
+      groupedPredictions[prediction.spot_id] = [
+        ...(groupedPredictions[prediction.spot_id] || []),
+        prediction,
+      ];
+    });
+
     return (
       <div className="container">
         <div className="columns is-multiline">
