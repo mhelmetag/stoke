@@ -3,8 +3,7 @@ import { shallow } from "enzyme";
 
 import Prediction from "./Prediction";
 
-const TIMEZONE_OFFSET = 7;
-const PREDICTION = {
+const prediction = {
   id: 1,
   spot_id: 1,
   created_on: "2020-07-05T13:00:25.532917",
@@ -17,9 +16,7 @@ describe("<Prediction />", () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(
-      <Prediction timezoneOffset={TIMEZONE_OFFSET} prediction={PREDICTION} />
-    );
+    wrapper = shallow(<Prediction prediction={prediction} />);
   });
 
   it("renders date with offset correctly", () => {

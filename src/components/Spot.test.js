@@ -4,7 +4,7 @@ import { shallow } from "enzyme";
 import Spot from "./Spot";
 import Prediction from "./Prediction";
 
-const SPOT = {
+const spot = {
   id: 1,
   surfline_id: "58f7edb9dadb30820bb3fa3d",
   surfline_spot_id: "5842041f4e65fad6a770893f",
@@ -12,7 +12,7 @@ const SPOT = {
   favorable_swells: ["SSE", "S", "SW", "WSW"],
   gathering_data: true,
 };
-const PREDICTIONS = [
+const predictions = [
   {
     id: 2,
     spot_id: 1,
@@ -35,7 +35,7 @@ describe("<Spot />", () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<Spot spot={SPOT} predictions={PREDICTIONS} />);
+    wrapper = shallow(<Spot spot={spot} predictions={predictions} />);
   });
 
   it("renders correct number of predictions", () => {
