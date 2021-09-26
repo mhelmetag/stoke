@@ -18,7 +18,6 @@ const Spot = ({ spot, predictions }) => {
   };
 
   const fourDayPredictions = predictions.slice(0, 4);
-  const timezoneOffset = new Date().getTimezoneOffset() / 60;
 
   return (
     <div className="column is-full">
@@ -37,13 +36,7 @@ const Spot = ({ spot, predictions }) => {
         <div className="card-content">
           <div className="level">
             {fourDayPredictions.sort(sortPredictions).map((prediction) => {
-              return (
-                <Prediction
-                  key={prediction.id}
-                  timezoneOffset={timezoneOffset}
-                  prediction={prediction}
-                />
-              );
+              return <Prediction key={prediction.id} prediction={prediction} />;
             })}
           </div>
         </div>

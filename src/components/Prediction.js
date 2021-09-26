@@ -1,15 +1,16 @@
 import React from "react";
 
-const Prediction = ({ timezoneOffset, prediction }) => {
+const Prediction = ({ prediction }) => {
   const predictionDate = new Date(prediction.forecasted_for);
-  predictionDate.setHours(predictionDate.getHours() - timezoneOffset);
-  const predictionDateString = predictionDate.toLocaleDateString("en-US");
+  const localizedPredictionDateString = new Intl.DateTimeFormat("en-US").format(
+    predictionDate
+  );
 
   return (
     <div className="level-item has-text-centered">
       <div>
         <p id={`date-${prediction.id}`} className="is-size-5">
-          {predictionDateString}
+          {localizedPredictionDateString}
         </p>
         <p>
           <span className="is-size-7">Ours </span>
