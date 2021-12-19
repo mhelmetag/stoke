@@ -4,7 +4,7 @@ Check in on forecast and prediction archives
 
 ## More Info
 
-Things and stuff.
+Gathers info from stoke-archives. Can be pointed to a local version depending on the value of `REACT_APP_STOKE_ARCHIVES_URL` in `.env.development` (points to the one hosted on heroku by default).
 
 ## How to Deploy
 
